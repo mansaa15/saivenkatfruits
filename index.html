@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sai Venkata Fruits - 120 Years of Freshness</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f4ef;
+            color: #2d2d2d;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f4a261;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease;
+            z-index: 9999;
+        }
+        .custom-cursor.grow {
+            width: 30px;
+            height: 30px;
+            background: rgba(244, 162, 97, 0.3);
+        }
+        .navbar {
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+        .navbar.sticky {
+            background: #1a3c34;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: particleFloat 10s infinite ease-in-out;
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            animation: fadeIn 1s ease-in;
+        }
+        .hero p {
+            font-size: 1.8rem;
+            margin: 1rem 0;
+        }
+        .cta-button {
+            background: #f4a261;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .cta-button:hover {
+            background: #e76f51;
+            transform: scale(1.05);
+        }
+        .carousel-section {
+            padding: 2rem 0;
+            background: #fff;
+            position: relative;
+        }
+        .carousel-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 1rem 0;
+            gap: 1rem;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .carousel::-webkit-scrollbar {
+            display: none;
+        }
+        .carousel-item {
+            flex: 0 0 300px;
+            height: 400px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        .carousel-item:hover {
+            transform: translateY(-10px) rotate(2deg);
+        }
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .carousel-item h3 {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 1rem;
+            margin: 0;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+        .carousel-nav:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        .carousel-prev {
+            left: 10px;
+        }
+        .carousel-next {
+            right: 10px;
+        }
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .parallax {
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        .fruit-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+        .contact-form input, .contact-form textarea {
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .contact-form button {
+            background: #1a3c34;
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .contact-form button:hover {
+            background: #2a604f;
+        }
+        footer {
+            background: #1a3c34;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            .hero p {
+                font-size: 1.4rem;
+            }
+            .section {
+                padding: 3rem 1.5rem;
+            }
+            .carousel-item {
+                flex: 0 0 250px;
+                height: 350px;
+            }
+            .fruit-image {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 1.2rem;
+            }
+            .carousel-item {
+                flex: 0 0 200px;
+                height: 300px;
+            }
+            .carousel-item h3 {
+                font-size: 1rem;
+            }
+            .fruit-image {
+                height: 200px;
+            }
+            .navbar .nav-links {
+                display: none;
+            }
+            .navbar .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: #1a3c34;
+                padding: 1rem;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            }
+            .hamburger {
+                display: block;
+                cursor: pointer;
+            }
+            .hamburger div {
+                width: 25px;
+                height: 3px;
+                background: white;
+                margin: 5px;
+                transition: all 0.3s ease;
+            }
+            .hamburger.active .line1 {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            .hamburger.active .line2 {
+                opacity: 0;
+            }
+            .hamburger.active .line3 {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            .grid-cols-2, .grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+            .section h2 {
+                font-size: 2rem;
+            }
+            .carousel-nav {
+                padding: 0.3rem 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .carousel-item {
+                flex: 0 0 160px;
+                height: 240px;
+            }
+            .carousel-item h3 {
+                font-size: 0.9rem;
+                padding: 0.5rem;
+            }
+            .fruit-image {
+                height: 150px;
+            }
+            .section {
+                padding: 2rem 1rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+            .cta-button {
+                padding: 0.5rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            .contact-form {
+                max-width: 100%;
+            }
+        }
+
+        /* Disable custom cursor on touch devices */
+        @media (pointer: coarse) {
+            .custom-cursor {
+                display: none;
+            }
+            body {
+                cursor: default;
+            }
+        }
+
+        /* Fix parallax for mobile (disable due to performance issues) */
+        @media (max-width: 768px) {
+            .parallax {
+                background-attachment: scroll;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-cursor" id="cursor"></div>
+    <nav class="navbar fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-white">Sai Venkata Fruits</h1>
+                </div>
+                <div class="hamburger md:hidden">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+                <div class="nav-links flex items-center space-x-4 md:flex hidden">
+                    <a href="#home" class="text-white hover:text-[#f4a261] px-3 py-2"> Home</a>
+                    <a href="#legacy" class="text-white hover:text-[#f4a261] px-3 py-2">Legacy</a>
+                    <a href="#sourcing" class="text-white hover:text-[#f4a261] px-3 py-2">Sourcing</a>
+                    <a href="#quality" class="text-white hover:text-[#f4a261] px-3 py-2">Quality</a>
+                    <a href="#order" class="text-white hover:text-[#f4a261] px-3 py-2">Order</a>
+                    <a href="#contact" class="text-white hover:text-[#f4a261] px-3 py-2">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="fade-in">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl">Sai Venkata Fruits</h1>
+            <p class="text-lg sm:text-xl md:text-2xl">120 Years of Freshness - Taste the Bounty of Nature</p>
+        </div>
+    </section>
+
+    <section class="carousel-section">
+        <div class="carousel-container">
+            <button class="carousel-nav carousel-prev">❮</button>
+            <div class="carousel">
+                <div class="carousel-item">
+                    <img src="images/apple.jpg" alt="Apple" loading="lazy">
+                    <h3>Apple</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/avocado.jpg" alt="Avocado" loading="lazy">
+                    <h3>Avocado</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/blueberries.jpg" alt="Blueberries" loading="lazy">
+                    <h3>Blueberries</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/cherry.jpg" alt="Cherry" loading="lazy">
+                    <h3>Cherry</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/dragon fruit.jpg" alt="Dragonfruit" loading="lazy">
+                    <h3>Dragonfruit</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/green apple.jpg" alt="Green Apple" loading="lazy">
+                    <h3>Green Apple</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/litchi.jpg" alt="Litchi" loading="lazy">
+                    <h3>Litchi</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/Mandarin.jpg" alt="Mandarin Mango" loading="lazy">
+                    <h3>Mandarin Mango</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/Mangosteen.png" alt="Mangosteen" loading="lazy">
+                    <h3>Mangosteen</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/passionfruit.jpg" alt="Passionfruit" loading="lazy">
+                    <h3>Passionfruit</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/Peaches.jpg" alt="Peaches" loading="lazy">
+                    <h3>Peaches</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/pear.jpg" alt="Pear" loading="lazy">
+                    <h3>Pear</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/persimmon.jpg" alt="Persimmon" loading="lazy">
+                    <h3>Persimmon</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/pink dragon fruit.jpg" alt="Pink Dragon Fruit" loading="lazy">
+                    <h3>Pink Dragon Fruit</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/rambutan.jpg" alt="Rambutan" loading="lazy">
+                    <h3>Rambutan</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/sweet tamarind.jpg" alt="Sweet Tamarind" loading="lazy">
+                    <h3>Sweet Tamarind</h3>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/white dragonfruit.jpg" alt="White Dragonfruit" loading="lazy">
+                    <h3>White Dragonfruit</h3>
+                </div>
+            </div>
+            <button class="carousel-nav carousel-next">❯</button>
+        </div>
+    </section>
+
+    <section id="legacy" class="section parallax" style="background-image: url('images/legacy-bg.jpg');">
+        <h2 class="text-3xl font-bold text-center mb-8 text-white">Our Legacy</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="card">
+                <img src="images/family-tradition.jpg" alt="Family Tradition" class="fruit-image" loading="lazy">
+                <h3 class="text-xl font-semibold">Family-Owned for 120 Years</h3>
+                <p>Generations nurturing the freshest, healthiest fruits with a commitment to excellence.</p>
+            </div>
+            <div class="card">
+                <img src="images/trusted-quality.jpg" alt="Trusted Quality" class="fruit-image" loading="lazy">
+                <h3 class="text-xl font-semibold">Trusted Quality</h3>
+                <p>A long tradition built on quality and trust, delivering nature's finest to your table.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="sourcing" class="section">
+        <h2 class="text-3xl font-bold text-center mb-8">Direct from Importers</h2>
+        <div class="card">
+            <img src="images/sourcing.jpg" alt="Direct Sourcing" class="fruit-image" loading="lazy">
+            <h3 class="text-xl font-semibold">Unmatched Freshness</h3>
+            <p>From importers straight to you, without middlemen, ensuring premium flavor and peak ripeness in every fruit.</p>
+        </div>
+    </section>
+
+    <section id="quality" class="section parallax" style="background-image: url('images/quality-bg.jpg');">
+        <h2 class="text-3xl font-bold text-center mb-8 text-white">Our Promise</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="card">
+                <h3 class="text-xl font-semibold">Good Quality</h3>
+                <p>Only the best fruits make it to your order, handpicked for excellence.</p>
+            </div>
+            <div class="card">
+                <h3 class="text-xl font-semibold">Freshness</h3>
+                <p>Flavor and freshness promised in every delivery, straight from the source.</p>
+            </div>
+            <div class="card">
+                <h3 class="text-xl font-semibold">Your Satisfaction</h3>
+                <p>We prioritize your happiness, ensuring every fruit delights your senses.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="order" class="section">
+        <h2 class="text-3xl font-bold text-center mb-8">Freshness a Click Away</h2>
+        <div class="card text-center">
+            <img src="images/ordering.jpg" alt="Online Ordering" class="fruit-image" loading="lazy">
+            <h3 class="text-xl font-semibold">Convenient Online Orders</h3>
+            <p>Experience our rich heritage online. Order exotic fruits with the same trusted quality, delivered to your doorstep.</p>
+            <a href="https://wa.me/c/919177833789" class="cta-button mt-4 inline-block" target="_blank">Shop Now</a>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="text-3xl font-bold text-center mb-8">Contact Us</h2>
+        <div class="card">
+            <p><strong>Sukeshini Thouta:</strong> +91 9177838382</p>
+            <p><strong>Email:</strong> saivenkatafruits@gmail.com</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Sai Venkata Fruits. Celebrating 120 Years of Freshness.</p>
+    </footer>
+
+    <script>
+        // Sticky Navbar
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('sticky');
+            } else {
+                navbar.classList.remove('sticky');
+            }
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                // Close mobile menu after clicking
+                const navLinks = document.querySelector('.nav-links');
+                const hamburger = document.querySelector('.hamburger');
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+
+        // Hamburger Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Carousel Navigation
+        const carousel = document.querySelector('.carousel');
+        const prevBtn = document.querySelector('.carousel-prev');
+        const nextBtn = document.querySelector('.carousel-next');
+        const getItemWidth = () => {
+            const item = document.querySelector('.carousel-item');
+            return item ? item.offsetWidth + 16 : 320; // Include gap
+        };
+
+        prevBtn.addEventListener('click', () => {
+            carousel.scrollBy({ left: -getItemWidth(), behavior: 'smooth' });
+        });
+
+        nextBtn.addEventListener('click', () => {
+            carousel.scrollBy({ left: getItemWidth(), behavior: 'smooth' });
+        });
+
+        // Custom Cursor (only for non-touch devices)
+        if (!window.matchMedia("(pointer: coarse)").matches) {
+            const cursor = document.getElementById('cursor');
+            document.addEventListener('mousemove', e => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            document.addEventListener('mouseover', e => {
+                if (e.target.closest('a, button, .carousel-item')) {
+                    cursor.classList.add('grow');
+                } else {
+                    cursor.classList.remove('grow');
+                }
+            });
+        }
+
+        // Update carousel item width on resize
+        window.addEventListener('resize', () => {
+            carousel.scrollTo({ left: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
